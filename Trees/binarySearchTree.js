@@ -67,6 +67,79 @@ class BinarySearchTree {
     // if value doesn't exist, return false
     return false;
   }
-  // remove
-}
 
+  // BFS iterative approach
+  breadthFirstSearch() {
+    let currentNode = this.root;
+    let list = [];
+    // use queue to store child node stuff
+    let queue = [];
+    queue.push(currentNode);
+
+    while(queue.length > 0) {
+      // remove first item from queue and push to list
+      currentNode = queue.shift();
+      list.push(currentNode.value);
+      // if left exists, push to queue
+      if (currentNode.left) {
+        queue.push(currentNode.left);
+      }
+      // if right exists, push to queue
+      if (currentNode.right) {
+        queue.push(currentNode.right);
+      }
+    }
+    return list;
+  }
+
+  // BFS recursive approach
+  breadthFirstSearchRecursive(queue, list) {
+    // base case
+    if (queue.length === 0) {
+      return list;
+    }
+    let currentNode = queue.shift();
+    list.push(currentNode.value);
+    if (currentNode.left) {
+      queue.push(currentNode.left);
+    }
+    if (currentNode.right) {
+      queue.push(currentNode.right);
+    }
+    return this.breadthFirstSearchRecursive(queue, list);
+  }
+
+  // 3 different ways to implement DFT, only difference is in order
+  DFTPreOrder(node, list) {
+    list.push(node.value);
+    if(node.left) {
+      this.DFTPreOrder(node.left, list);
+    }
+    if(node.right) {
+      this.DFTPreOrder(node.right, list);
+    }
+    return list;
+  }
+
+  DFTPostOrder(node, list) {
+    if(node.left) {
+      this.DFTPostOrder(node.left, list);
+    }
+    if(node.right) {
+      this.DFTPostOrder(node.right, list);
+    }
+    list.push(node.value);
+    return list;
+  }
+
+  DFTInOrder(node, list) {
+    if(node.left) {
+      this.DFTInOrder(node.left, list);
+    }
+    list.push(node.value);
+    if(node.right) {
+      this.DFTInOrder(node.right, list);
+    }
+    return list;
+  }
+}
